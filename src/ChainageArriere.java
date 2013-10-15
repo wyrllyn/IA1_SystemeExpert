@@ -17,6 +17,7 @@ public class ChainageArriere {
 			dem = true;
 		
 		// second case
+		//TODO modifier
 		for (Rule r : rules){
 			if (r.getDeducedFacts() == goal){
 				while(!dem){	
@@ -40,6 +41,9 @@ public class ChainageArriere {
 	
 	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules){
 		boolean ver = true;
+		
+		//TODO modifier cette grossiere erreur
+	
 		for(Fact f : goals){
 			while(ver){
 				ver = demo(f, bf, rules);
@@ -47,5 +51,4 @@ public class ChainageArriere {
 		}
 		return ver;
 	}
-
 }
