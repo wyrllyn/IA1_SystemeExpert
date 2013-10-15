@@ -1,0 +1,16 @@
+BF:
+	fait1
+	fait2
+	...
+#End
+Goal:
+	faitX
+#End
+#Rules
+$Rule //note: numéros de règle attribués automatiquement
+	IF fait1
+		AND fait2
+	THEN fait3
+$Rule
+	...
+#End
