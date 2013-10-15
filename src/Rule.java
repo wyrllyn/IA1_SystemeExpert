@@ -5,7 +5,9 @@ import java.util.List;
 public class Rule {
 	
 	private List<Fact> requiredFacts;
-	private List<Fact> deducedFacts;
+	private Fact deducedFact;
+	private int ruleNumber;
+	private static int ruleCount = 0;
 	
 	/**
 	 * Creates a Rule. Note: assumes provided facts are valid!
@@ -13,9 +15,11 @@ public class Rule {
 	 * @param df
 	 * @see Fact
 	 */
-	public Rule(List<Fact> rf, List<Fact> df){
+	public Rule(List<Fact> rf, Fact df){
 		requiredFacts = rf;
-		deducedFacts = df;
+		deducedFact = df;
+		ruleNumber = ruleCount;
+		ruleCount++;
 	}
 
 	public List<Fact> getRequiredFacts() {
@@ -26,11 +30,11 @@ public class Rule {
 		this.requiredFacts = requiredFacts;
 	}
 
-	public List<Fact> getDeducedFacts() {
-		return deducedFacts;
+	public Fact getDeducedFacts() {
+		return deducedFact;
 	}
 
-	public void setDeducedFacts(List<Fact> deducedFacts) {
-		this.deducedFacts = deducedFacts;
+	public void setDeducedFacts(Fact deducedFact) {
+		this.deducedFact = deducedFact;
 	}
 }
