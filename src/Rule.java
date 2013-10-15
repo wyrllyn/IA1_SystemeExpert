@@ -22,6 +22,8 @@ public class Rule {
 		ruleCount++;
 	}
 
+
+
 	public List<Fact> getRequiredFacts() {
 		return requiredFacts;
 	}
