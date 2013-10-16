@@ -50,10 +50,11 @@ public class SystemeExpert {
 			
 			line = br.readLine().trim();
 		}
-		//TODO: validate?
+		
 		Engine engine = new Engine(baseFacts);
-		engine.addRule(null);//TODO:setRules
-		return null;
+		engine.setRules(rules);
+		//TODO: validate?
+		return engine;
 	}
 
 	private static boolean readRule(List<Rule> rules, BufferedReader br)
