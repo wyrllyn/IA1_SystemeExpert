@@ -29,6 +29,7 @@ public class SystemeExpert {
 		List<Fact> goals = new LinkedList<Fact>();
 		List<Rule> rules = new LinkedList<Rule>();
 		while (line != null) {
+			line = line.trim();
 			if (ends(line)) {
 				readBF = false;
 				readGoal = false;
@@ -48,7 +49,7 @@ public class SystemeExpert {
 				continue; // skip the readLine()
 			}
 			
-			line = br.readLine().trim();
+			line = br.readLine();
 		}
 		
 		Engine engine = new Engine(baseFacts);
@@ -74,7 +75,7 @@ public class SystemeExpert {
 				readIf = false;
 				readThen = true;
 				df = stuffFact(line, rf, readIf, "THEN");
-			} else if ((readIf || readThen) && requiredString("AND", line)) {
+			} else if ((readIf || readThen) && optionalString("AND", line)) {
 				stuffFact(line, rf, readIf, "AND");
 			}
 			line = br.readLine().trim();
