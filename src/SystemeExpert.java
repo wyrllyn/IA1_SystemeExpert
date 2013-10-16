@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class SystemeExpert {
 	private static List<Event> traceLog;
+	private static TreeSet<Fact> possibleFacts;
+	
 	public static void log(EventType type, String comment) {
 		if (traceLog == null)
 			traceLog = new LinkedList<Event>();
@@ -67,6 +70,7 @@ public class SystemeExpert {
 		log(EventType.PARSING_FILE, "Parsing done");
 		Engine engine = new Engine(baseFacts);
 		engine.setRules(rules);
+		engine.setPossibleFacts(possibleFacts);
 		//TODO: validate?
 		return engine;
 	}
@@ -109,6 +113,7 @@ public class SystemeExpert {
 		Fact fact = new Fact(line);
 		if (readIf)
 			rf.add(fact);
+		possibleFacts.add(fact);
 		return fact;
 	}
 
