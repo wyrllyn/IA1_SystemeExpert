@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -21,8 +22,22 @@ public class SystemeExpert {
 	
 	public static void main(String args[])
 			throws ExpertException, IOException{
-		List<Fact> baseFacts = new LinkedList<Fact>();
-		Engine engine = parseFile("");
+		Engine engine = null;
+		for (int i = 0; i < args.length; i++) {
+			if (args[i] == "-file") {
+				try {
+					engine = parseFile(args[++i]);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					System.err.println("Insuficient number of arguments");
+					System.exit(0);
+				}
+			} else if (args[i] == "-strategy") {
+				//TODO:todo
+			}
+		}
 		
 	}
 	
