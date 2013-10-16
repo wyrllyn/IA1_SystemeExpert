@@ -10,14 +10,14 @@ import java.util.List;
 public class SystemeExpert {
 	
 	
-	public static void main(String args[]) throws ExpertException{
+	public static void main(String args[])
+			throws ExpertException, IOException{
 		List<Fact> baseFacts = new LinkedList<Fact>();
-		baseFacts.add(new Fact("slave"));
-		baseFacts.add(new Fact("poste_resp"));
+		Engine engine = parseFile("");
 		
 	}
 	
-	public static Engine readFile(String fileURL) throws ExpertException, IOException {
+	public static Engine parseFile(String fileURL) throws ExpertException, IOException {
 		FileInputStream fis = new FileInputStream(fileURL);
 		InputStreamReader isr = new InputStreamReader(fis);
 		BufferedReader br = new BufferedReader(isr);
@@ -29,51 +29,69 @@ public class SystemeExpert {
 		List<Fact> goals = new LinkedList<Fact>();
 		List<Rule> rules = new LinkedList<Rule>();
 		while (line != null) {
+			line = line.trim();
 			if (ends(line)) {
 				readBF = false;
 				readGoal = false;
 				readRules = false;
-			} else if (optionalString("BF:", line)) {
+			} else if (optionalString("#BF", line)) {
 				readBF = true;
 			} else if (readBF) {
 				baseFacts.add(new Fact(line));
-			} else if (optionalString("Goal", line)) {
+			} else if (optionalString("#Goal", line)) {
 				readGoal = true;
 			} else if (readGoal) {
 				goals.add(new Fact(line));
 			} else if (optionalString("#Rules", line)) {
 				readRules = true;
-			} else if (readRules && requiredString("$Name:", line)) {
-				readRule(rules, br);
+			} else if (readRules && requiredString("$Rule:", line)) {
+				readRules = parseRule(rules, br);
 				continue; // skip the readLine()
 			}
 			
-			line = br.readLine().trim();
+			line = br.readLine();
 		}
-		//TODO: validate?
 		
-		return null;
+		Engine engine = new Engine(baseFacts);
+		engine.setRules(rules);
+		//TODO: validate?
+		return engine;
 	}
 
-	private static void readRule(List<Rule> rules, BufferedReader br)
+	private static boolean parseRule(List<Rule> rules, BufferedReader br)
 			throws IOException, ExpertException {
 		boolean readIf = false;
 		boolean readThen = false;
 		String line = br.readLine().trim();
+		List<Fact> rf = new LinkedList<Fact>();
+		Fact df = null;
 		while (line != null
 				&& !optionalString("$Rule:", line)
 				&& !ends(line)) {
 			if (!readIf && !readThen && requiredString("IF", line)) {
 				readIf = true;
-				//truncate + save fact
+				stuffFact(line, rf, readIf, "IF");
 			} else if (readIf && optionalString("THEN", line)) {
 				readIf = false;
 				readThen = true;
-				//stuff fact
-			} else if ((readIf || readThen) && requiredString("AND", line)) {
-				
+				df = stuffFact(line, rf, readIf, "THEN");
+			} else if ((readIf || readThen) && optionalString("AND", line)) {
+				stuffFact(line, rf, readIf, "AND");
 			}
+			line = br.readLine().trim();
 		}
+		//TODO:check if everything is OK
+		rules.add(new Rule(rf, df));
+		return !ends(line);
+	}
+
+	private static Fact stuffFact(String line, List<Fact> rf,
+			boolean readIf, String toRemove) throws ExpertException {
+		line = line.replace(toRemove, "").trim();
+		Fact fact = new Fact(line);
+		if (readIf)
+			rf.add(fact);
+		return fact;
 	}
 
 	private static boolean requiredString(String string, String line)

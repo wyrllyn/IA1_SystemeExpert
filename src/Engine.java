@@ -8,7 +8,7 @@ public class Engine {
 	private List<Fact> initialFacts;
 	private List<Fact> facts;
 	
-	public Engine( List<Fact> f){
+	public Engine(List<Fact> f){
 		initialFacts = f;
 		rules = new LinkedList<Rule>();
 		facts = new LinkedList<Fact>(f);
@@ -16,6 +16,10 @@ public class Engine {
 
 	public void addRule(Rule rule) {
 		rules.add(rule);
+	}
+	
+	public void setRules(List<Rule> rules) {
+		this.rules = rules;
 	}
 	
 	
