@@ -10,10 +10,10 @@ import java.util.List;
 public class SystemeExpert {
 	
 	
-	public static void main(String args[]) throws ExpertException{
+	public static void main(String args[])
+			throws ExpertException, IOException{
 		List<Fact> baseFacts = new LinkedList<Fact>();
-		baseFacts.add(new Fact("slave"));
-		baseFacts.add(new Fact("poste_resp"));
+		Engine engine = readFile("");
 		
 	}
 	
@@ -44,36 +44,51 @@ public class SystemeExpert {
 			} else if (optionalString("#Rules", line)) {
 				readRules = true;
 			} else if (readRules && requiredString("$Name:", line)) {
-				readRule(rules, br);
+				readRules = readRule(rules, br);
 				continue; // skip the readLine()
 			}
 			
 			line = br.readLine().trim();
 		}
 		//TODO: validate?
-		
+		Engine engine = new Engine(baseFacts);
+		engine.addRule(null);//TODO:setRules
 		return null;
 	}
 
-	private static void readRule(List<Rule> rules, BufferedReader br)
+	private static boolean readRule(List<Rule> rules, BufferedReader br)
 			throws IOException, ExpertException {
 		boolean readIf = false;
 		boolean readThen = false;
 		String line = br.readLine().trim();
+		List<Fact> rf = new LinkedList<Fact>();
+		Fact df = null;//TODO:todo
 		while (line != null
 				&& !optionalString("$Rule:", line)
 				&& !ends(line)) {
 			if (!readIf && !readThen && requiredString("IF", line)) {
 				readIf = true;
-				//truncate + save fact
+				stuffFact(line, rf, readIf, "IF");
 			} else if (readIf && optionalString("THEN", line)) {
 				readIf = false;
 				readThen = true;
-				//stuff fact
+				df = stuffFact(line, rf, readIf, "THEN");
 			} else if ((readIf || readThen) && requiredString("AND", line)) {
-				
+				stuffFact(line, rf, readIf, "AND");
 			}
+			line = br.readLine().trim();
 		}
+		rules.add(new Rule(rf, df));
+		return !ends(line);
+	}
+
+	private static Fact stuffFact(String line, List<Fact> rf,
+			boolean readIf, String toRemove) throws ExpertException {
+		line = line.replace(toRemove, "").trim();
+		Fact fact = new Fact(line);
+		if (readIf)
+			rf.add(fact);
+		return fact;
 	}
 
 	private static boolean requiredString(String string, String line)
