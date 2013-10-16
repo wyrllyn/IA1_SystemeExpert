@@ -13,11 +13,11 @@ public class SystemeExpert {
 	public static void main(String args[])
 			throws ExpertException, IOException{
 		List<Fact> baseFacts = new LinkedList<Fact>();
-		Engine engine = readFile("");
+		Engine engine = parseFile("");
 		
 	}
 	
-	public static Engine readFile(String fileURL) throws ExpertException, IOException {
+	public static Engine parseFile(String fileURL) throws ExpertException, IOException {
 		FileInputStream fis = new FileInputStream(fileURL);
 		InputStreamReader isr = new InputStreamReader(fis);
 		BufferedReader br = new BufferedReader(isr);
@@ -33,18 +33,18 @@ public class SystemeExpert {
 				readBF = false;
 				readGoal = false;
 				readRules = false;
-			} else if (optionalString("BF:", line)) {
+			} else if (optionalString("#BF", line)) {
 				readBF = true;
 			} else if (readBF) {
 				baseFacts.add(new Fact(line));
-			} else if (optionalString("Goal", line)) {
+			} else if (optionalString("#Goal", line)) {
 				readGoal = true;
 			} else if (readGoal) {
 				goals.add(new Fact(line));
 			} else if (optionalString("#Rules", line)) {
 				readRules = true;
-			} else if (readRules && requiredString("$Name:", line)) {
-				readRules = readRule(rules, br);
+			} else if (readRules && requiredString("$Rule:", line)) {
+				readRules = parseRule(rules, br);
 				continue; // skip the readLine()
 			}
 			
@@ -57,13 +57,13 @@ public class SystemeExpert {
 		return engine;
 	}
 
-	private static boolean readRule(List<Rule> rules, BufferedReader br)
+	private static boolean parseRule(List<Rule> rules, BufferedReader br)
 			throws IOException, ExpertException {
 		boolean readIf = false;
 		boolean readThen = false;
 		String line = br.readLine().trim();
 		List<Fact> rf = new LinkedList<Fact>();
-		Fact df = null;//TODO:todo
+		Fact df = null;
 		while (line != null
 				&& !optionalString("$Rule:", line)
 				&& !ends(line)) {
@@ -79,6 +79,7 @@ public class SystemeExpert {
 			}
 			line = br.readLine().trim();
 		}
+		//TODO:check if everything is OK
 		rules.add(new Rule(rf, df));
 		return !ends(line);
 	}

@@ -1,0 +1,47 @@
+#BF
+	slave
+	poste_resp
+#End
+#Goal
+	accepte
+#End
+#Rules
+$Rule: //note: numéros de règle attribués automatiquement
+	IF poste_resp
+		AND langue_facile
+		AND parle_neerlandais
+	THEN dynamique
+
+$Rule:
+	IF langue_facile
+		AND parle_anglais
+	THEN adaptabilite
+
+$Rule:
+	IF slave
+		AND dynamique
+	THEN adaptabilite
+	
+$Rule:
+	IF poste_resp
+	THEN leadership
+	
+$Rule:
+	IF langue_facile
+	THEN parle_neerlandais
+	
+$Rule:
+	IF adaptabilite
+		AND leadership
+	THEN accepte
+	
+$Rule:
+	IF slave
+	THEN langue_facile
+	
+$Rule:
+	IF leadership
+		AND slave
+	THEN adaptabilite
+
+#End
