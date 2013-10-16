@@ -1,17 +1,26 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class ChainageArriere {
 	
-	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules){
+	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules, TreeSet<Fact> possibleFacts){
 		boolean dem = false;
 		char var = ' ';
 		//list demandable
 		List<Fact> demandables = new LinkedList<Fact>();
 		
 		// initialization of demandables
-		//TODO
+		for (Fact possible : possibleFacts){
+			boolean present = false;
+			for (Rule r : rules){
+				if (possible == r.getDeducedFacts())
+					present = true;
+			}
+			if (!present)
+				demandables.add(possible);
+		}
 		
 		// first case
 		if (facts.contains(goal))
@@ -20,7 +29,7 @@ public class ChainageArriere {
 		// second case
 		for (Rule r : rules){
 			if (r.getDeducedFacts() == goal && !dem){
-				dem = verif(r.getRequiredFacts(),facts, rules);
+				dem = verif(r.getRequiredFacts(),facts, rules, possibleFacts);
 			}
 		}
 		
@@ -41,12 +50,12 @@ public class ChainageArriere {
 		return dem;
 	}
 	
-	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules){
+	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, TreeSet<Fact> possibleFacts){
 		boolean ver = true;
 	
 		for(Fact f : goals){
 			if(ver){
-				ver = demo(f, bf, rules);
+				ver = demo(f, bf, rules, possibleFacts);
 			}
 		}
 		return ver;
