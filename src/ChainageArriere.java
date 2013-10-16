@@ -6,6 +6,7 @@ public class ChainageArriere {
 	
 	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules){
 		boolean dem = false;
+		char var = ' ';
 		//list demandable
 		List<Fact> demandables = new LinkedList<Fact>();
 		
@@ -17,19 +18,20 @@ public class ChainageArriere {
 			dem = true;
 		
 		// second case
-		//TODO modifier
 		for (Rule r : rules){
-			if (r.getDeducedFacts() == goal){
-				while(!dem){	
-					dem = verif(r.getRequiredFacts(),facts, rules);
-				}
+			if (r.getDeducedFacts() == goal && !dem){
+				dem = verif(r.getRequiredFacts(),facts, rules);
 			}
 		}
 		
 		// third case
 			
 		if(!dem && demandables.contains(goal)){
-						//TODO
+				System.out.println("add "+goal.getName()+ "in the bf ? (y/n) if you don't know, choose n");
+				//TODO : get value
+				if(var == 'y')
+					dem = true;
+				else dem = false;
 		}
 		
 		if(dem){
@@ -41,11 +43,9 @@ public class ChainageArriere {
 	
 	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules){
 		boolean ver = true;
-		
-		//TODO modifier cette grossiere erreur
 	
 		for(Fact f : goals){
-			while(ver){
+			if(ver){
 				ver = demo(f, bf, rules);
 			}
 		}
