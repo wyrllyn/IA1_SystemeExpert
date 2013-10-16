@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -8,7 +7,14 @@ import java.util.List;
 
 
 public class SystemeExpert {
-	
+	private static List<Event> traceLog;
+	public static void log(EventType type, String comment) {
+		if (traceLog == null)
+			traceLog = new LinkedList<Event>();
+		Event event = new Event(type, comment);
+		traceLog.add(event);
+		System.out.println(event);
+	}
 	
 	public static void main(String args[])
 			throws ExpertException, IOException{
@@ -17,7 +23,8 @@ public class SystemeExpert {
 		
 	}
 	
-	public static Engine parseFile(String fileURL) throws ExpertException, IOException {
+	public static Engine parseFile(String fileURL)
+			throws ExpertException, IOException {
 		FileInputStream fis = new FileInputStream(fileURL);
 		InputStreamReader isr = new InputStreamReader(fis);
 		BufferedReader br = new BufferedReader(isr);
@@ -28,6 +35,7 @@ public class SystemeExpert {
 		List<Fact> baseFacts = new LinkedList<Fact>();
 		List<Fact> goals = new LinkedList<Fact>();
 		List<Rule> rules = new LinkedList<Rule>();
+		log(EventType.PARSING_FILE, fileURL);
 		while (line != null) {
 			line = line.trim();
 			if (ends(line)) {
@@ -36,14 +44,19 @@ public class SystemeExpert {
 				readRules = false;
 			} else if (optionalString("#BF", line)) {
 				readBF = true;
+				log(EventType.PARSING_BF, "");
 			} else if (readBF) {
 				baseFacts.add(new Fact(line));
+				log(EventType.PARSING_BF, line);
 			} else if (optionalString("#Goal", line)) {
 				readGoal = true;
+				log(EventType.PARSING_GOAL, "");
 			} else if (readGoal) {
 				goals.add(new Fact(line));
+				log(EventType.PARSING_GOAL, line);
 			} else if (optionalString("#Rules", line)) {
 				readRules = true;
+				log(EventType.PARSING_RULE_LIST, "");
 			} else if (readRules && requiredString("$Rule:", line)) {
 				readRules = parseRule(rules, br);
 				continue; // skip the readLine()
@@ -51,7 +64,7 @@ public class SystemeExpert {
 			
 			line = br.readLine();
 		}
-		
+		log(EventType.PARSING_FILE, "Parsing done");
 		Engine engine = new Engine(baseFacts);
 		engine.setRules(rules);
 		//TODO: validate?
@@ -65,21 +78,26 @@ public class SystemeExpert {
 		String line = br.readLine().trim();
 		List<Fact> rf = new LinkedList<Fact>();
 		Fact df = null;
+		log(EventType.PARSING_RULE, "Begin");
 		while (line != null
 				&& !optionalString("$Rule:", line)
 				&& !ends(line)) {
 			if (!readIf && !readThen && requiredString("IF", line)) {
 				readIf = true;
+				log(EventType.PARSING_FACT, line);
 				stuffFact(line, rf, readIf, "IF");
 			} else if (readIf && optionalString("THEN", line)) {
 				readIf = false;
 				readThen = true;
+				log(EventType.PARSING_FACT, line);
 				df = stuffFact(line, rf, readIf, "THEN");
 			} else if ((readIf || readThen) && optionalString("AND", line)) {
+				log(EventType.PARSING_FACT, line);
 				stuffFact(line, rf, readIf, "AND");
 			}
 			line = br.readLine().trim();
 		}
+		log(EventType.PARSING_RULE, "End");
 		//TODO:check if everything is OK
 		rules.add(new Rule(rf, df));
 		return !ends(line);
