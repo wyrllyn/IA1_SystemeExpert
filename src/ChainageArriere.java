@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 
@@ -7,7 +8,8 @@ public class ChainageArriere {
 	
 	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules, TreeSet<Fact> possibleFacts){
 		boolean dem = false;
-		char var = ' ';
+		Scanner scanner = new Scanner (System.in);
+
 		//list demandable
 		List<Fact> demandables = new LinkedList<Fact>();
 		
@@ -36,9 +38,9 @@ public class ChainageArriere {
 		// third case
 			
 		if(!dem && demandables.contains(goal)){
-				System.out.println("add "+goal.getName()+ "in the bf ? (y/n) if you don't know, choose n");
-				//TODO : get value
-				if(var == 'y')
+				System.out.println("add "+goal.getName()+ "in the bf ? 1 for yes, anything for no");
+				int val = scanner.nextInt ();
+				if(val == 1)
 					dem = true;
 				else dem = false;
 		}
