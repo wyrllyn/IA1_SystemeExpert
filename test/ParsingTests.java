@@ -9,7 +9,7 @@ public class ParsingTests {
 
 	@Test
 	public void testParseFile() throws ExpertException, IOException {
-		Engine engine = SystemeExpert.parseFile("res/universe.txt");
+		Engine engine = SystemeExpert.parseFile(SystemeExpert.RES_UNIVERSE_TXT);
 		assertNotNull(engine);
 	}
 

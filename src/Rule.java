@@ -4,6 +4,12 @@ import java.util.List;
 
 public class Rule {
 	
+	@Override
+	public String toString() {
+		return "Rule [requiredFacts=" + requiredFacts + ", deducedFact="
+				+ deducedFact + ", ruleNumber=" + ruleNumber + "]";
+	}
+
 	private List<Fact> requiredFacts;
 	private Fact deducedFact;
 	private int ruleNumber;

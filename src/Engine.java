@@ -25,7 +25,32 @@ public class Engine {
 		this.rules = rules;
 	}
 	
+	public List<Rule> getRules() {
+		return rules;
+	}
 	
+	public List<Fact> getInitialFacts() {
+		return initialFacts;
+	}
+	
+	@Override
+	public String toString() {
+		String s = "Engine [rules=";
+		for (Rule r : rules) {
+			s += "\n\t" + r;
+		}
+		s += "\ninitialFacts=";
+		for (Fact f : initialFacts) {
+			s += "\n\t" + f;
+		}
+		/*s += "\npossibleFacts=";
+		for (Fact f : possibleFacts) {
+			s += "\n\t" + f;
+		}*/
+		s += "\n]";
+		return s;
+	}
+
 	public void applyRules() {
 		
 	}
@@ -39,5 +64,9 @@ public class Engine {
 
 	public void setPossibleFacts(TreeSet<Fact> possibleFacts) {
 		this.possibleFacts = possibleFacts;
+	}
+
+	public List<Fact> getFacts() {
+		return facts;
 	}
 }

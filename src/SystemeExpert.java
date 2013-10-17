@@ -86,6 +86,7 @@ public class SystemeExpert {
 		Engine engine = new Engine(baseFacts);
 		engine.setRules(rules);
 		engine.setPossibleFacts(possibleFacts);
+		System.out.println(engine);
 		//TODO: validate?
 		return engine;
 	}
@@ -128,7 +129,7 @@ public class SystemeExpert {
 		Fact fact = new Fact(line);
 		if (readIf)
 			rf.add(fact);
-		possibleFacts.add(fact);
+		//possibleFacts.add(fact);
 		return fact;
 	}
 
@@ -150,4 +151,6 @@ public class SystemeExpert {
 		else
 			return true;
 	}
+
+	public static final String RES_UNIVERSE_TXT = "res/universe.txt";
 }
