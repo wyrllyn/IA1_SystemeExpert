@@ -10,11 +10,13 @@ public class Engine {
 	private List<Fact> initialFacts;
 	private List<Fact> facts;
 	private Set<Fact> possibleFacts;
+	private List<Fact> goals;
 	
 	public Engine(List<Fact> f){
 		initialFacts = f;
 		rules = new LinkedList<Rule>();
 		facts = new LinkedList<Fact>(f);
+		goals = new LinkedList<Fact>();
 		possibleFacts = new HashSet<Fact>();
 	}
 
@@ -69,5 +71,17 @@ public class Engine {
 
 	public List<Fact> getFacts() {
 		return facts;
+	}
+
+	public void setGoals(List<Fact> goals) {
+		this.goals = goals;
+	}
+	
+	public List<Fact> getGoals() {
+		return goals;
+	}
+
+	public Set<Fact> getPossibleFacts() {
+		return possibleFacts;
 	}
 }

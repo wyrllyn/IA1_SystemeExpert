@@ -87,6 +87,7 @@ public class SystemeExpert {
 		log(EventType.PARSING_FILE, "Parsing done");
 		Engine engine = new Engine(baseFacts);
 		engine.setRules(rules);
+		engine.setGoals(goals);
 		engine.setPossibleFacts(possibleFacts);
 		System.out.println(engine);
 		//TODO: validate?

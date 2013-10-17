@@ -1,12 +1,12 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.Set;
 
 
 public class ChainageArriere {
 	
-	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules, TreeSet<Fact> possibleFacts){
+	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean dem = false;
 		Scanner scanner = new Scanner (System.in);
 
@@ -52,7 +52,7 @@ public class ChainageArriere {
 		return dem;
 	}
 	
-	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, TreeSet<Fact> possibleFacts){
+	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean ver = true;
 	
 		for(Fact f : goals){

@@ -15,8 +15,10 @@ public class ChainageAvant {
 			
 			// for each rules
 			LinkedList<Rule> toRemove = new LinkedList<Rule>();
+			SystemeExpert.log(EventType.RULE_TESTING, "Starting rule tests");
 			for (Rule r : rules) {
-				System.out.println("one rule is tested");
+				SystemeExpert.log(EventType.RULE_TESTING,
+						"Rule being tested:" + r);
 				boolean dec = true;
 				for(Fact f : r.getRequiredFacts()){
 					System.out.println(" is "+f.getName()+" in the bf ?");
