@@ -45,4 +45,44 @@ public class Rule {
 	public void setDeducedFacts(Fact deducedFact) {
 		this.deducedFact = deducedFact;
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((deducedFact == null) ? 0 : deducedFact.hashCode());
+		result = prime * result
+				+ ((requiredFacts == null) ? 0 : requiredFacts.hashCode());
+		result = prime * result + ruleNumber;
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rule other = (Rule) obj;
+		if (deducedFact == null) {
+			if (other.deducedFact != null)
+				return false;
+		} else if (!deducedFact.equals(other.deducedFact))
+			return false;
+		if (requiredFacts == null) {
+			if (other.requiredFacts != null)
+				return false;
+		} else if (!requiredFacts.equals(other.requiredFacts))
+			return false;
+		if (ruleNumber != other.ruleNumber)
+			return false;
+		return true;
+	}
 }

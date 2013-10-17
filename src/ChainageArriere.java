@@ -34,18 +34,22 @@ public class ChainageArriere {
 		// second case
 		int i = 0;
 		do {
+			System.out.println("teeeeest");
 			Rule r = rules.get(i);
-			if (!dem && r.getDeducedFact() == goal){
+			System.out.println("deduces fact test " +r.getDeducedFact());
+			System.out.println(" goal is "+goal.getName());
+			if (!dem && r.getDeducedFact().equals(goal)){
 				System.out.println("This rule achieves our goal:" + r);
 				dem = verif(r.getRequiredFacts(),facts, rules, possibleFacts);
 			}
 			i++;
+			System.out.println("i = "+i+" size rules "+rules.size());
 		} while (dem == false && i < rules.size());
 		
 		// third case
 			
 		if(!dem && demandables.contains(goal)){
-			System.out.println("add "+goal.getName()+ "in the bf ? 1 for yes, anything for no");
+			System.out.println("add "+goal.getName()+ " in the bf ? 1 for yes, anything for no");
 			int val = scanner.nextInt ();
 			if(val == 1)
 				dem = true;
@@ -63,9 +67,12 @@ public class ChainageArriere {
 	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean ver = true;
 	
+		System.out.println("now verif");
+		
 		int i = 0;
 		do {
 			Fact f = goals.get(i);
+			System.out.println("---- verif, current goal "+f.getName());
 			if (ver)
 				ver = demo(f, bf, rules, possibleFacts);
 			i++;

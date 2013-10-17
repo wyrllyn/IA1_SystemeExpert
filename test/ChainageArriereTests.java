@@ -11,7 +11,7 @@ public class ChainageArriereTests {
 	public void test() throws ExpertException, IOException {
 		Engine engine = SystemeExpert.parseFile(SystemeExpert.RES_UNIVERSE_TXT);
 		ChainageArriere ca = new ChainageArriere();
-		ca.verif(engine.getGoals(),
+		ca.demo(new Fact("accepte"),
 				engine.getFacts(),
 				engine.getRules(),
 				engine.getPossibleFacts());
