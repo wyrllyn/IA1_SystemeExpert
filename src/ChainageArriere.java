@@ -17,35 +17,43 @@ public class ChainageArriere {
 		for (Fact possible : possibleFacts){
 			boolean present = false;
 			for (Rule r : rules){
-				if (possible == r.getDeducedFacts())
+				if (possible == r.getDeducedFact())
 					present = true;
 			}
 			if (!present)
 				demandables.add(possible);
 		}
+		System.out.println("This is our goal:" + goal);
 		
 		// first case
-		if (facts.contains(goal))
+		if (facts.contains(goal)) {
+			System.out.println("goal is already in base facts");
 			dem = true;
+		}
 		
 		// second case
-		for (Rule r : rules){
-			if (r.getDeducedFacts() == goal && !dem){
+		int i = 0;
+		do {
+			Rule r = rules.get(i);
+			if (!dem && r.getDeducedFact() == goal){
+				System.out.println("This rule achieves our goal:" + r);
 				dem = verif(r.getRequiredFacts(),facts, rules, possibleFacts);
 			}
-		}
+			i++;
+		} while (dem == false && i < rules.size());
 		
 		// third case
 			
 		if(!dem && demandables.contains(goal)){
-				System.out.println("add "+goal.getName()+ "in the bf ? 1 for yes, anything for no");
-				int val = scanner.nextInt ();
-				if(val == 1)
-					dem = true;
-				else dem = false;
+			System.out.println("add "+goal.getName()+ "in the bf ? 1 for yes, anything for no");
+			int val = scanner.nextInt ();
+			if(val == 1)
+				dem = true;
+			else dem = false;
 		}
 		
 		if(dem){
+			System.out.println(" dem = true");
 			facts.add(goal);
 		}
 		
@@ -55,11 +63,13 @@ public class ChainageArriere {
 	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean ver = true;
 	
-		for(Fact f : goals){
-			if(ver){
+		int i = 0;
+		do {
+			Fact f = goals.get(i);
+			if (ver)
 				ver = demo(f, bf, rules, possibleFacts);
-			}
-		}
+			i++;
+		} while (ver == true && i < goals.size());
 		return ver;
 	}
 }

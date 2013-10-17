@@ -12,7 +12,7 @@ public class ChainageArriereTests {
 		Engine engine = SystemeExpert.parseFile(SystemeExpert.RES_UNIVERSE_TXT);
 		ChainageArriere ca = new ChainageArriere();
 		ca.verif(engine.getGoals(),
-				engine.getInitialFacts(),
+				engine.getFacts(),
 				engine.getRules(),
 				engine.getPossibleFacts());
 		for (Fact f : engine.getFacts()) {

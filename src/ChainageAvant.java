@@ -31,8 +31,8 @@ public class ChainageAvant {
 						break;
 				}
 				if (dec){
-					facts.add(r.getDeducedFacts());
-					System.out.println(" new fact in the bf : "+r.getDeducedFacts());
+					facts.add(r.getDeducedFact());
+					System.out.println(" new fact in the bf : "+r.getDeducedFact());
 					toRemove.add(r);
 					System.out.println(" rule was applied => delete");
 					inf = true;

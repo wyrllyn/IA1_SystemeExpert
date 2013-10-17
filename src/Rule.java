@@ -38,7 +38,7 @@ public class Rule {
 		this.requiredFacts = requiredFacts;
 	}
 
-	public Fact getDeducedFacts() {
+	public Fact getDeducedFact() {
 		return deducedFact;
 	}
 
