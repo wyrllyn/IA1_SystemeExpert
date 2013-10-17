@@ -3,14 +3,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.Set;
 
 
 public class SystemeExpert {
 	private static List<Event> traceLog;
-	private static TreeSet<Fact> possibleFacts;
+	private static Set<Fact> possibleFacts;
 	
 	public static void log(EventType type, String comment) {
 		if (traceLog == null)
@@ -53,6 +54,7 @@ public class SystemeExpert {
 		List<Fact> baseFacts = new LinkedList<Fact>();
 		List<Fact> goals = new LinkedList<Fact>();
 		List<Rule> rules = new LinkedList<Rule>();
+		possibleFacts = new HashSet<Fact>();
 		log(EventType.PARSING_FILE, fileURL);
 		while (line != null) {
 			line = line.trim();
@@ -129,7 +131,7 @@ public class SystemeExpert {
 		Fact fact = new Fact(line);
 		if (readIf)
 			rf.add(fact);
-		//possibleFacts.add(fact);
+		possibleFacts.add(fact);
 		return fact;
 	}
 
