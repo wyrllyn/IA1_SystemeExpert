@@ -6,8 +6,8 @@ public class Rule {
 	
 	@Override
 	public String toString() {
-		return "Rule [requiredFacts=" + requiredFacts + ", deducedFact="
-				+ deducedFact + ", ruleNumber=" + ruleNumber + "]";
+		return "Rule #" + ruleNumber + ", deducedFact=" + deducedFact
+				+ " [requiredFacts=" + requiredFacts + "]";
 	}
 
 	private List<Fact> requiredFacts;

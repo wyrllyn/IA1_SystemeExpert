@@ -21,25 +21,31 @@ public class ChainageAvant {
 						"Rule being tested:" + r);
 				boolean dec = true;
 				for(Fact f : r.getRequiredFacts()){
-					System.out.println(" is "+f.getName()+" in the bf ?");
+					SystemeExpert.log(EventType.FACT_TESTING,
+							" is '"+f.getName()+"' in the bf ?");
 					if(!facts.contains(f)){
 						dec = false;
-						System.out.println("---------" + f.getName()+"  isn't in the bf");
+						SystemeExpert.log(EventType.FACT_TESTING, "\tNegative");
 					}
-					else System.out.println("---------" + f.getName()+" is in the bf");
+					else {
+						SystemeExpert.log(EventType.FACT_TESTING, "\tAffirmative");
+					}
 					if (!dec)
 						break;
 				}
 				if (dec){
 					facts.add(r.getDeducedFact());
-					System.out.println(" new fact in the bf : "+r.getDeducedFact());
+					SystemeExpert.log(EventType.RULE_APPLICATION, 
+							" new fact in the bf : "+r.getDeducedFact());
 					toRemove.add(r);
-					System.out.println(" rule was applied => delete");
+					SystemeExpert.log(EventType.HOUSE_KEEPING,
+							"Rule was applied => tagging it for removal");
 					inf = true;
 					nbInf++;
 				}
 			}
 			
+			SystemeExpert.log(EventType.HOUSE_KEEPING, "Removing rules");
 			for (Rule r : toRemove) {
 				rules.remove(r);
 			}

@@ -37,6 +37,8 @@ public class SystemeExpert {
 				}
 			} else if (args[i] == "-strategy") {
 				//TODO:todo
+			} else if (args[i] == "-logLevel") {
+				
 			}
 		}
 		
