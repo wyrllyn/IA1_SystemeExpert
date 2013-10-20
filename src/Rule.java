@@ -13,6 +13,7 @@ public class Rule {
 	private List<Fact> requiredFacts;
 	private Fact deducedFact;
 	private int ruleNumber;
+	private int priority;
 	private static int ruleCount = 0;
 	
 	/**
@@ -25,6 +26,7 @@ public class Rule {
 		requiredFacts = rf;
 		deducedFact = df;
 		ruleNumber = ruleCount;
+		priority = 0;
 		ruleCount++;
 	}
 
@@ -32,6 +34,14 @@ public class Rule {
 
 	public List<Fact> getRequiredFacts() {
 		return requiredFacts;
+	}
+	
+	public int getPriority(){
+		return this.priority;
+	}
+	
+	public void setPriority(int prior){
+		this.priority = prior;
 	}
 
 	public void setRequiredFacts(List<Fact> requiredFacts) {
