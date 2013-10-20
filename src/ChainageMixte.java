@@ -6,23 +6,6 @@ import java.util.Set;
 
 public class ChainageMixte {
 	
-	/*
-	 TREE
-: F (à déduire)
-DEBUT
-TANT QUE
-F n'est pas déduit mais peut encore l'être
-FAIRE
-- Saturer la base de faits par chaînage AVANT
-(c'est-à-dire, déduire tout ce qui peut être
-déduit)
-- Chercher quels sont les faits encore déductibles
-- Déterminer une question pertinente à poser à
-l'utilisateur
-et ajouter sa réponse à la base de faits
-FIN DU TANT QUE
-FIN
-	 */
 	public ChainageAvant CA;
 	
 	void procedure(List<Rule> rules, List<Fact> facts, Fact goal, Set<Fact> possibleFacts){
