@@ -54,17 +54,6 @@ public class Engine {
 		return s;
 	}
 
-	public void applyRules() {
-		
-	}
-	
-	protected void applyRule(Rule rule) throws ExpertException {
-		if (!rules.contains(rule)) {
-			throw new ExpertException("Unknown rule:" + rule);
-		}
-		//TODO:rule application stuff
-	}
-
 	public void setPossibleFacts(Set<Fact> possibleFacts2) {
 		this.possibleFacts = possibleFacts2;
 	}

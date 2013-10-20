@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
@@ -12,38 +11,77 @@ import java.util.Set;
 public class SystemeExpert {
 	private static List<Event> traceLog;
 	private static Set<Fact> possibleFacts;
+	protected enum LogLevel {
+		ALL,
+		RULES_ONLY
+	}
+	private static LogLevel logLevel = LogLevel.ALL;
+	
+	protected enum Strategy {
+		CHAINAGE_AVANT,
+		CHAINAGE_ARRIERE
+	}
+	private static Strategy strategy;
 	
 	public static void log(EventType type, String comment) {
 		if (traceLog == null)
 			traceLog = new LinkedList<Event>();
 		Event event = new Event(type, comment);
 		traceLog.add(event);
-		System.out.println(event);
+		switch (logLevel) {
+		case RULES_ONLY:
+			if (type != EventType.RULE_APPLICATION) {
+				break;
+			}
+		case ALL:
+			System.out.println(event);
+		}
 	}
 	
 	public static void main(String args[])
 			throws ExpertException, IOException{
-		Engine engine = null;
+		String fileURL = "res/universe.txt";
 		for (int i = 0; i < args.length; i++) {
-			if (args[i] == "-file") {
-				try {
-					engine = parseFile(args[++i]);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-					System.exit(0);
-				} catch (ArrayIndexOutOfBoundsException e) {
-					System.err.println("Insuficient number of arguments");
-					System.exit(0);
+			try {
+				if (args[i] == "-file") {
+					fileURL = args[++i];
+				} else if (args[i] == "-strategy") {
+					setStrategy(args[++i]);
+				} else if (args[i] == "-logLevel") {
+					setLogLevel(args[++i]);
 				}
-			} else if (args[i] == "-strategy") {
-				//TODO:todo
-			} else if (args[i] == "-logLevel") {
-				
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.err.println("Insuficient number of arguments");
 			}
 		}
+		Engine engine = parseFile(fileURL);
 		
 	}
 	
+	private static void setStrategy(String strat) {
+		if (strat.equals("avant")) {
+			strategy = Strategy.CHAINAGE_AVANT;
+		} else if (strat.equals("arriere")) {
+			strategy = Strategy.CHAINAGE_ARRIERE;
+		} else {
+			strategy = Strategy.CHAINAGE_AVANT;
+			System.err.println("Invalid strategy, defaulting to " + strategy);
+		}
+	}
+
+	private static void setLogLevel(String level) {
+		if (level.equals("all")) {
+			logLevel = LogLevel.ALL;
+		} else if (level.equals("rules")) {
+			logLevel = LogLevel.RULES_ONLY;
+		} else {
+			logLevel = LogLevel.ALL;
+			System.err.println("Invalid log level, defaulting to " + logLevel);
+			System.err.println("Valid entries: all, rules");
+		}
+		
+	}
+
 	public static Engine parseFile(String fileURL)
 			throws ExpertException, IOException {
 		FileInputStream fis = new FileInputStream(fileURL);
