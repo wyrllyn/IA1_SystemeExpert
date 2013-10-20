@@ -91,13 +91,13 @@ public class Engine {
 		
 		switch (conflict) {
 		case PREMISSES: //unicorn
-			
 			break;
 		case VALUE: //pony
 			Pony pony = new Pony(rules);
 			rules = pony.getNewList();
 			break;
 		}
+		ca.setConflict(conflict);
 		
 		ca.procedure(this.rules, this.facts, goal, possibleFacts);
 	}

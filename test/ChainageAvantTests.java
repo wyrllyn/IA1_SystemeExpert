@@ -14,5 +14,14 @@ public class ChainageAvantTests {
 		ca.procedure(engine.getRules(), engine.getFacts(), engine.getGoal(), engine.getPossibleFacts());
 		assertTrue(engine.getFacts().contains(new Fact("accepte")));
 	}
+	
+	@Test
+	public void testWithUnicorn() throws ExpertException, IOException {
+		Engine engine = SystemeExpert.parseFile(SystemeExpert.DEFAULT_FILE_URL);
+		ChainageAvant ca = new ChainageAvant();
+		ca.setConflict(Conflict.PREMISSES);
+		ca.procedure(engine.getRules(), engine.getFacts(), engine.getGoal(), engine.getPossibleFacts());
+		assertTrue(engine.getFacts().contains(new Fact("accepte")));
+	}
 
 }

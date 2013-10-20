@@ -19,7 +19,14 @@ public class ChainageAvant implements Chainage {
 			// for each rules
 			LinkedList<Rule> toRemove = new LinkedList<Rule>();
 			SystemeExpert.log(EventType.RULE_TESTING, "Starting rule tests");
-			for (Rule r : rules) {
+			List<Rule> myRules = null;
+			if (conflict == Conflict.PREMISSES) {
+				Unicorn u = new Unicorn(facts, rules);
+				myRules = u.getToReturn();
+			} else {
+				myRules = rules;
+			}
+			for (Rule r : myRules) {
 				SystemeExpert.log(EventType.RULE_TESTING,
 						"Rule being tested:" + r);
 				boolean dec = true;
