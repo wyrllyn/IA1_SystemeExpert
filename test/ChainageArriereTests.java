@@ -44,4 +44,13 @@ public class ChainageArriereTests {
 				engine.getRules(),
 				engine.getPossibleFacts());
 	}
+	
+	@Test
+	public void testWithUnicorn() {
+		ca.setConflict(Conflict.PREMISSES);
+		ca.demo(new Fact("accepte"),
+				engine.getFacts(),
+				engine.getRules(),
+				engine.getPossibleFacts());
+	}
 }

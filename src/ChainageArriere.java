@@ -35,11 +35,18 @@ public class ChainageArriere implements Chainage {
 		// second case
 		int i = 0;
 		do {
-			Rule r = rules.get(i);
+			List<Rule> myRules = null;
+			if (conflict == Conflict.PREMISSES) {
+				Unicorn u = new Unicorn(facts, rules);
+				myRules = u.getToReturn();
+			} else {
+				myRules = rules;
+			}
+			Rule r = myRules.get(i);
 			SystemeExpert.log(EventType.INFO, "deduces fact test " +r.getDeducedFact());
 			if (!dem && r.getDeducedFact().equals(goal)){
 				SystemeExpert.log(EventType.RULE_TESTING, "This rule achieves our goal:" + r);
-				dem = verif(r.getRequiredFacts(),facts, rules, possibleFacts);
+				dem = verif(r.getRequiredFacts(),facts, myRules, possibleFacts);
 			}
 			i++;
 		} while (dem == false && i < rules.size());
@@ -54,7 +61,7 @@ public class ChainageArriere implements Chainage {
 			else dem = false;
 		}
 		
-		if(dem){
+		if(dem && !facts.contains(goal)){
 			SystemeExpert.log(EventType.RULE_APPLICATION, "Adding goal:" + goal);
 			facts.add(goal);
 		}
@@ -64,13 +71,10 @@ public class ChainageArriere implements Chainage {
 	
 	public boolean verif(List<Fact> goals, List<Fact> bf, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean ver = true;
-	
-		System.out.println("now verif");
 		
 		int i = 0;
 		do {
 			Fact f = goals.get(i);
-			System.out.println("---- verif, current goal "+f.getName());
 			if (ver)
 				ver = demo(f, bf, rules, possibleFacts);
 			i++;
