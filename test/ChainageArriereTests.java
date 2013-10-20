@@ -2,9 +2,19 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import main.ExpertException;
+import main.SystemeExpert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import resolution.ChainageArriere;
+import resolution.Engine;
+import resolution.conflict.Conflict;
+import resolution.conflict.Value;
+import struct.Fact;
+
 
 
 public class ChainageArriereTests {
@@ -37,7 +47,7 @@ public class ChainageArriereTests {
 	
 	@Test
 	public void testWithPony() {
-		Pony pony = new Pony(engine.getRules());
+		Value pony = new Value(engine.getRules());
 		engine.setRules(pony.getNewList());
 		ca.demo(new Fact("accepte"),
 				engine.getFacts(),

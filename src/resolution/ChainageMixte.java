@@ -1,7 +1,13 @@
+package resolution;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+
+import resolution.conflict.Conflict;
+import struct.Fact;
+import struct.Rule;
+
 
 
 public class ChainageMixte implements Chainage {

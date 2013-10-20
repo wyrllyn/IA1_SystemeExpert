@@ -1,3 +1,4 @@
+package logging;
 
 public class Event {
 	private EventType type;

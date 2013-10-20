@@ -1,3 +1,4 @@
+package struct;
 
 
 public class Fact {

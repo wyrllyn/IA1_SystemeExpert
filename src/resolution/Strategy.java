@@ -1,3 +1,4 @@
+package resolution;
 
 public enum Strategy {
 	CHAINAGE_AVANT,

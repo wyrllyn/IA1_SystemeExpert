@@ -2,7 +2,12 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import main.ExpertException;
+import main.SystemeExpert;
+
 import org.junit.Test;
+
+import resolution.Engine;
 
 
 public class MainTests {
@@ -13,7 +18,9 @@ public class MainTests {
 			"-strategy",
 			"arriere",
 			"-logLevel",
-			"rules"
+			"rules",
+			"-conflict",
+			"premisses"
 	};
 	
 	@Test

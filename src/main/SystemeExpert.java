@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,6 +7,16 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import logging.Event;
+import logging.EventType;
+
+import resolution.Engine;
+import resolution.Strategy;
+import resolution.conflict.Conflict;
+import struct.Fact;
+import struct.Rule;
+
 
 
 public class SystemeExpert {

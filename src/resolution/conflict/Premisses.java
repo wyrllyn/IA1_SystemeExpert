@@ -1,14 +1,19 @@
+package resolution.conflict;
+
 import java.util.LinkedList;
 import java.util.List;
 
+import struct.Fact;
+import struct.Rule;
 
-public class Unicorn {
+
+public class Premisses {
 	private List<Fact> bf;
 	private List<Rule> rules;
 	private Rule toApply;
 	private List<Rule> toReturn = new LinkedList<Rule>();
 	
-	public Unicorn(List<Fact> bf, List<Rule> rules){
+	public Premisses(List<Fact> bf, List<Rule> rules){
 		this.bf = bf;
 		this.rules = rules;
 		

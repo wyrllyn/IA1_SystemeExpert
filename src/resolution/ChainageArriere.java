@@ -1,7 +1,18 @@
+package resolution;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+
+import logging.EventType;
+import main.SystemeExpert;
+
+import resolution.conflict.Conflict;
+import resolution.conflict.Premisses;
+import struct.Fact;
+import struct.Rule;
+
 
 
 public class ChainageArriere implements Chainage {
@@ -37,7 +48,7 @@ public class ChainageArriere implements Chainage {
 		do {
 			List<Rule> myRules = null;
 			if (conflict == Conflict.PREMISSES) {
-				Unicorn u = new Unicorn(facts, rules);
+				Premisses u = new Premisses(facts, rules);
 				myRules = u.getToReturn();
 			} else {
 				myRules = rules;

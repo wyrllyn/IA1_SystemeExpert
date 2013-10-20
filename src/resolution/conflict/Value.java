@@ -1,15 +1,19 @@
+package resolution.conflict;
+
 import java.util.LinkedList;
 import java.util.List;
 
+import struct.Rule;
 
-public class Pony {
+
+public class Value {
 	
 	private List<Rule> rules;
 	private List<Rule> newList = new LinkedList<Rule>();
 	
 	//
 	
-	public Pony(List<Rule> rules){
+	public Value(List<Rule> rules){
 		this.rules = rules;
 		int maxPrior = 0;
 		

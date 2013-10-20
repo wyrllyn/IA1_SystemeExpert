@@ -1,3 +1,4 @@
+package logging;
 
 public enum EventType {
 	PARSING_FILE,

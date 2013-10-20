@@ -2,7 +2,16 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import main.ExpertException;
+import main.SystemeExpert;
+
 import org.junit.Test;
+
+import resolution.ChainageAvant;
+import resolution.Engine;
+import resolution.conflict.Conflict;
+import struct.Fact;
+
 
 
 public class ChainageAvantTests {

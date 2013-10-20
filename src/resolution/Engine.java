@@ -1,7 +1,14 @@
+package resolution;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import resolution.conflict.Conflict;
+import resolution.conflict.Value;
+import struct.Fact;
+import struct.Rule;
+
 
 
 public class Engine {
@@ -93,7 +100,7 @@ public class Engine {
 		case PREMISSES: //unicorn
 			break;
 		case VALUE: //pony
-			Pony pony = new Pony(rules);
+			Value pony = new Value(rules);
 			rules = pony.getNewList();
 			break;
 		}
