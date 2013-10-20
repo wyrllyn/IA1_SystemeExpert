@@ -8,9 +8,10 @@ import struct.Rule;
 
 
 public class Premisses {
+	@SuppressWarnings("unused")
 	private List<Fact> bf;
+	@SuppressWarnings("unused")
 	private List<Rule> rules;
-	private Rule toApply;
 	private List<Rule> toReturn = new LinkedList<Rule>();
 	
 	public Premisses(List<Fact> bf, List<Rule> rules){
@@ -37,7 +38,6 @@ public class Premisses {
 		// the highest priority is the one with the most recent facts in the bf
 		for (Rule r : rules){
 			if (r.getPriority() > maxPrior){
-				toApply = r;
 				maxPrior = r.getPriority();
 			}
 		}

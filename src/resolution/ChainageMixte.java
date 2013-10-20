@@ -13,8 +13,10 @@ import struct.Rule;
 public class ChainageMixte implements Chainage {
 	
 	public ChainageAvant CA;
+	@SuppressWarnings("unused")
 	private Conflict conflict;
 	
+	@SuppressWarnings("unused")
 	public void procedure(List<Rule> rules, List<Fact> facts, Fact goal, Set<Fact> possibleFacts){
 		boolean dem = false;
 		boolean deductible = true;

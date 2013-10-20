@@ -8,6 +8,7 @@ import struct.Rule;
 
 public class Value {
 	
+	@SuppressWarnings("unused")
 	private List<Rule> rules;
 	private List<Rule> newList = new LinkedList<Rule>();
 	
