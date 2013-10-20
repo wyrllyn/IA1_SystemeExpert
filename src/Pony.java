@@ -1,10 +1,11 @@
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class Pony {
 	
 	private List<Rule> rules;
-	private List<Rule> newList;
+	private List<Rule> newList = new LinkedList<Rule>();
 	
 	//
 	

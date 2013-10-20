@@ -23,27 +23,24 @@ public class ChainageArriere {
 			if (!present)
 				demandables.add(possible);
 		}
-		System.out.println("This is our goal:" + goal);
+		SystemeExpert.log(EventType.INFO, "This is our goal:" + goal);
 		
 		// first case
 		if (facts.contains(goal)) {
-			System.out.println("goal is already in base facts");
+			SystemeExpert.log(EventType.FACT_TESTING, "goal is already in base facts");
 			dem = true;
 		}
 		
 		// second case
 		int i = 0;
 		do {
-			System.out.println("teeeeest");
 			Rule r = rules.get(i);
-			System.out.println("deduces fact test " +r.getDeducedFact());
-			System.out.println(" goal is "+goal.getName());
+			SystemeExpert.log(EventType.INFO, "deduces fact test " +r.getDeducedFact());
 			if (!dem && r.getDeducedFact().equals(goal)){
-				System.out.println("This rule achieves our goal:" + r);
+				SystemeExpert.log(EventType.RULE_TESTING, "This rule achieves our goal:" + r);
 				dem = verif(r.getRequiredFacts(),facts, rules, possibleFacts);
 			}
 			i++;
-			System.out.println("i = "+i+" size rules "+rules.size());
 		} while (dem == false && i < rules.size());
 		
 		// third case
@@ -57,7 +54,7 @@ public class ChainageArriere {
 		}
 		
 		if(dem){
-			System.out.println(" dem = true");
+			SystemeExpert.log(EventType.RULE_APPLICATION, "Adding goal:" + goal);
 			facts.add(goal);
 		}
 		
