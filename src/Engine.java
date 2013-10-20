@@ -11,6 +11,7 @@ public class Engine {
 	private List<Fact> facts;
 	private Set<Fact> possibleFacts;
 	private List<Fact> goals;
+	private Fact goal;
 	
 	public Engine(List<Fact> f){
 		initialFacts = f;
@@ -64,6 +65,7 @@ public class Engine {
 
 	public void setGoals(List<Fact> goals) {
 		this.goals = goals;
+		goal = goals.get(0);
 	}
 	
 	public List<Fact> getGoals() {
@@ -72,5 +74,35 @@ public class Engine {
 
 	public Set<Fact> getPossibleFacts() {
 		return possibleFacts;
+	}
+
+	public void go(Strategy strategy, Conflict conflict) {
+		Chainage ca = null;
+		switch (strategy) {
+		case CHAINAGE_AVANT:
+			ca = new ChainageAvant();
+			break;
+		case CHAINAGE_ARRIERE:
+			ca = new ChainageArriere();
+			break;
+		case CHAINAGE_MIXTE:
+			ca = new ChainageMixte();
+		}
+		
+		switch (conflict) {
+		case PREMISSES: //unicorn
+			
+			break;
+		case VALUE: //pony
+			Pony pony = new Pony(rules);
+			rules = pony.getNewList();
+			break;
+		}
+		
+		ca.procedure(this.rules, this.facts, goal, possibleFacts);
+	}
+
+	public Fact getGoal() {
+		return goal;
 	}
 }

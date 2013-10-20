@@ -9,19 +9,18 @@ import java.util.Set;
 
 
 public class SystemeExpert {
+	public static final String DEFAULT_FILE_URL = "res/universe.txt";
+	private static Conflict conflict = Conflict.PREMISSES;
 	private static List<Event> traceLog;
 	private static Set<Fact> possibleFacts;
-	protected enum LogLevel {
+	public enum LogLevel {
 		ALL,
-		RULES_ONLY
+		RULES_ONLY,
+		NONE
 	}
 	private static LogLevel logLevel = LogLevel.ALL;
 	
-	protected enum Strategy {
-		CHAINAGE_AVANT,
-		CHAINAGE_ARRIERE
-	}
-	private static Strategy strategy;
+	private static Strategy strategy = Strategy.CHAINAGE_ARRIERE;
 	
 	public static void log(EventType type, String comment) {
 		if (traceLog == null)
@@ -32,23 +31,30 @@ public class SystemeExpert {
 		case RULES_ONLY:
 			if (type != EventType.RULE_APPLICATION) {
 				break;
+			} else {
+				System.out.println(event);
 			}
 		case ALL:
 			System.out.println(event);
+			break;
+		case NONE:
+			break;
 		}
 	}
 	
 	public static void main(String args[])
 			throws ExpertException, IOException{
-		String fileURL = "res/universe.txt";
+		String fileURL = DEFAULT_FILE_URL;
 		for (int i = 0; i < args.length; i++) {
 			try {
-				if (args[i] == "-file") {
+				if (args[i].equals("-file")) {
 					fileURL = args[++i];
-				} else if (args[i] == "-strategy") {
+				} else if (args[i].equals("-strategy")) {
 					setStrategy(args[++i]);
-				} else if (args[i] == "-logLevel") {
+				} else if (args[i].equals("-logLevel")) {
 					setLogLevel(args[++i]);
+				} else if (args[i].equals("-conflict")) {
+					setConflict(args[++i]);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				System.err.println("Insuficient number of arguments");
@@ -56,9 +62,24 @@ public class SystemeExpert {
 		}
 		Engine engine = parseFile(fileURL);
 		
+		engine.go(strategy, conflict);
+		
+		System.out.println("END");
 	}
 	
-	private static void setStrategy(String strat) {
+	private static void setConflict(String conf) {
+		if (conf.equals("premisses")) {
+			conflict = Conflict.PREMISSES;
+		} else if (conf.equals("value")) {
+			conflict = Conflict.VALUE;
+		} else {
+			conflict = Conflict.PREMISSES;
+			System.err.println("Invalid conflict resolution parameter, defaulting to " + conflict);
+		}
+		
+	}
+
+	public static void setStrategy(String strat) {
 		if (strat.equals("avant")) {
 			strategy = Strategy.CHAINAGE_AVANT;
 		} else if (strat.equals("arriere")) {
@@ -69,15 +90,17 @@ public class SystemeExpert {
 		}
 	}
 
-	private static void setLogLevel(String level) {
+	public static void setLogLevel(String level) {
 		if (level.equals("all")) {
 			logLevel = LogLevel.ALL;
 		} else if (level.equals("rules")) {
 			logLevel = LogLevel.RULES_ONLY;
+		} else if (level.equals("none")) {
+			logLevel = LogLevel.NONE;
 		} else {
 			logLevel = LogLevel.ALL;
 			System.err.println("Invalid log level, defaulting to " + logLevel);
-			System.err.println("Valid entries: all, rules");
+			System.err.println("Valid entries: all, rules, none");
 		}
 		
 	}
@@ -130,7 +153,6 @@ public class SystemeExpert {
 		engine.setGoals(goals);
 		engine.setPossibleFacts(possibleFacts);
 		System.out.println(engine);
-		//TODO: validate?
 		return engine;
 	}
 
@@ -161,7 +183,6 @@ public class SystemeExpert {
 			line = br.readLine().trim();
 		}
 		log(EventType.PARSING_RULE, "End");
-		//TODO:check if everything is OK
 		rules.add(new Rule(rf, df));
 		return !ends(line);
 	}
@@ -194,6 +215,4 @@ public class SystemeExpert {
 		else
 			return true;
 	}
-
-	public static final String RES_UNIVERSE_TXT = "res/universe.txt";
 }

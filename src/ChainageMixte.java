@@ -4,11 +4,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 
-public class ChainageMixte {
+public class ChainageMixte implements Chainage {
 	
 	public ChainageAvant CA;
+	private Conflict conflict;
 	
-	void procedure(List<Rule> rules, List<Fact> facts, Fact goal, Set<Fact> possibleFacts){
+	public void procedure(List<Rule> rules, List<Fact> facts, Fact goal, Set<Fact> possibleFacts){
 		boolean dem = false;
 		boolean deductible = true;
 		Scanner scanner = new Scanner (System.in);
@@ -33,7 +34,7 @@ public class ChainageMixte {
 		}
 		
 		while(!dem){		
-				CA.procedure(rules, facts);
+				CA.procedure(rules, facts, goal, possibleFacts);
 			
 			if (facts.contains(goal)) {
 				System.out.println("goal is already in base facts");
@@ -53,6 +54,12 @@ public class ChainageMixte {
 				facts.add(goal);
 			}
 		}
+	}
+
+	@Override
+	public void setConflict(Conflict conflict) {
+		this.conflict = conflict;
+		
 	}	
 }
 

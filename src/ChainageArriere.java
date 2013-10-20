@@ -4,7 +4,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 
-public class ChainageArriere {
+public class ChainageArriere implements Chainage {
+	private Conflict conflict;
 	
 	public boolean demo(Fact goal, List<Fact> facts, List<Rule> rules, Set<Fact> possibleFacts){
 		boolean dem = false;
@@ -75,5 +76,19 @@ public class ChainageArriere {
 			i++;
 		} while (ver == true && i < goals.size());
 		return ver;
+	}
+
+	@Override
+	public void procedure(List<Rule> rules, List<Fact> facts, Fact goal,
+			Set<Fact> possibleFacts) {
+		demo(goal,
+				facts,
+				rules,
+				possibleFacts);
+	}
+
+	@Override
+	public void setConflict(Conflict conflict) {
+		this.conflict = conflict;
 	}
 }

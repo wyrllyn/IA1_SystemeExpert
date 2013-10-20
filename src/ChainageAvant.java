@@ -1,10 +1,13 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
-public class ChainageAvant {
+public class ChainageAvant implements Chainage {
 	
-	public void procedure(List<Rule> rules, List<Fact> facts){
-		
+	private Conflict conflict;
+
+	@Override
+	public void procedure(List<Rule> rules, List<Fact> facts,  Fact goal, Set<Fact> possibleFacts){
 			
 		boolean inf = true;
 		@SuppressWarnings("unused")
@@ -50,6 +53,11 @@ public class ChainageAvant {
 				rules.remove(r);
 			}
 		}
+	}
+
+	@Override
+	public void setConflict(Conflict conflict) {
+		this.conflict = conflict;
 	}
 
 }

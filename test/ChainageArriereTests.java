@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -14,7 +13,7 @@ public class ChainageArriereTests {
 	
 	@Before
 	public void setup() throws ExpertException, IOException {
-		engine = SystemeExpert.parseFile(SystemeExpert.RES_UNIVERSE_TXT);
+		engine = SystemeExpert.parseFile(SystemeExpert.DEFAULT_FILE_URL);
 		ca = new ChainageArriere();
 	}
 	
@@ -25,10 +24,9 @@ public class ChainageArriereTests {
 		}
 	}
 	
-	@Ignore
 	@Test
 	public void test() throws ExpertException, IOException {
-		engine = SystemeExpert.parseFile(SystemeExpert.RES_UNIVERSE_TXT);
+		engine = SystemeExpert.parseFile(SystemeExpert.DEFAULT_FILE_URL);
 		ca = new ChainageArriere();
 		ca.demo(new Fact("accepte"),
 				engine.getFacts(),
