@@ -40,7 +40,7 @@ public class SystemeExpert {
 		traceLog.add(event);
 		switch (logLevel) {
 		case RULES_ONLY:
-			if (type != EventType.RULE_APPLICATION) {
+			if (type != EventType.RULE_APPLICATION || type != EventType.RULE_TESTING) {
 				break;
 			} else {
 				System.out.println(event);
