@@ -23,7 +23,7 @@ public class MainTests {
 			"premisses"
 	};
 	
-	@Test
+	//@Test
 	public void testParseFile() throws ExpertException, IOException {
 		Engine engine = SystemeExpert.parseFile(SystemeExpert.DEFAULT_FILE_URL);
 		assertNotNull(engine);
